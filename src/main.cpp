@@ -12,15 +12,32 @@ typedef map_array::index map_index;
 class Map {
     public:
         map_array map_layout;
+        map_array struct_element;
         int width;
         int height;
         int num_rooms;
+        int se_size;
 
-        Map(int width, int height, int num_rooms) : width(width), height(height), num_rooms(num_rooms) {
+        Map(int width, int height, int num_rooms, int se_size) : width(width), height(height), num_rooms(num_rooms), se_size(se_size) {
             map_layout.resize(boost::extents[width][height]);
             int i;
             for(i=0; i<num_rooms; i++){
                 random_room();
+            }
+
+            struct_element.resize(boost::extents[se_size][se_size]);
+            struct_element[(int)se_size/2][(int)se_size/2] = 1;
+        }
+
+        void print_se() {
+            map_index i = 0;
+            map_index j = 0;
+
+            for(i=0; i<se_size; i++){
+                for(j=0; j<se_size; j++){
+                    std::cout << struct_element[i][j] << " ";
+                }
+                std::cout << std::endl;
             }
         }
 
@@ -58,7 +75,9 @@ class Map {
 };
 
 int main(void) {
-    Map *map = new Map(WIDTH, HEIGHT, 5);
+    Map *map = new Map(WIDTH, HEIGHT, 5, 5);
     map->print();
+    std::cout << std::endl;
+    map->print_se();
     return 0;
 }
