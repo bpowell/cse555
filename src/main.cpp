@@ -10,6 +10,21 @@ typedef boost::multi_array_types::index_range range;
 #define HEIGHT 50
 #define MAX_ROOM_SIZE 5
 
+bool operator==(const map_array::array_view<2>::type &lhs, map_array &rhs) {
+    unsigned int i = 0;
+    unsigned int j = 0;
+
+    for(; i<lhs.shape()[0]; i++){
+        for(j=0; j<lhs.shape()[1]; j++){
+            if(lhs[i][j]!=rhs[i][j]){
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
 class Map {
     public:
         //map layout with extra padding for struct element
@@ -90,6 +105,12 @@ class Map {
                     std::cout << view[i][j] << " ";
                 }
                 std::cout << std::endl;
+            }
+
+            if(view==struct_element) {
+                std::cout << "equal" << std::endl;
+            }else{
+                std::cout << "not equal" << std::endl;
             }
         }
 
