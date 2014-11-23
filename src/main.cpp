@@ -80,6 +80,19 @@ class Map {
             }
         }
 
+        void compare(int x, int y) {
+            map_array::array_view<2>::type view = map_layout[boost::indices[range(x-padding,x+padding+1)][range(y-padding,y+padding+1)]];
+            unsigned int i = 0;
+            unsigned int j = 0;
+
+            for(; i<view.shape()[0]; i++){
+                for(j=0; j<view.shape()[1]; j++){
+                    std::cout << view[i][j] << " ";
+                }
+                std::cout << std::endl;
+            }
+        }
+
         void print() {
             map_index i = 0;
             map_index j = 0;
@@ -112,5 +125,6 @@ int main(void) {
     map->printview();
     std::cout << std::endl;
     map->print_se();
+    map->compare(5,5);
     return 0;
 }
