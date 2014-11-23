@@ -63,9 +63,12 @@ class Map {
             map_index i = 0;
             map_index j = 0;
 
+            int padding = se_size / (int) 2;
+            map_array::array_view<2>::type map_view = map_layout[boost::indices[range(padding,width)][range(padding,height)]];
+
             for(i=x; i<room_size+x; i++){
                 for(j=y; j<room_size+y; j++){
-                    map_layout[i][j] = 1;
+                    map_view[i][j] = 1;
                 }
             }
         }
@@ -74,25 +77,24 @@ class Map {
             map_index i = 0;
             map_index j = 0;
 
-            for(i=0; i<WIDTH; i++){
-                for(j=0; j<HEIGHT; j++){
+            for(i=0; i<width; i++){
+                for(j=0; j<height; j++){
                     std::cout << map_layout[i][j] << " ";
                 }
                 std::cout << std::endl;
             }
         }
 
-        void compare() {
-            typedef boost::multi_array_types::index_range range;
-            map_array::index_gen indices;
+        void printview() {
+            int padding = se_size / (int) 2;
+            map_array::array_view<2>::type map_view = map_layout[boost::indices[range(padding,width)][range(padding,height)]];
 
-            map_array::array_view<2>::type view = map_layout[indices[range(0,3)][range(0,3)]];
             map_index i = 0;
             map_index j = 0;
 
-            for(i=0; i<3; i++){
-                for(j=0; j<3; j++){
-                    std::cout << view[i][j] << " ";
+            for(i=0; i<width-padding; i++){
+                for(j=0; j<height-padding; j++){
+                    std::cout << map_view[i][j] << " ";
                 }
                 std::cout << std::endl;
             }
@@ -102,6 +104,8 @@ class Map {
 int main(void) {
     Map *map = new Map(WIDTH, HEIGHT, 5, 5);
     map->print();
+    std::cout << std::endl;
+    map->printview();
     std::cout << std::endl;
     map->print_se();
     return 0;
