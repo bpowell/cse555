@@ -26,7 +26,7 @@ class Map {
             }
 
             struct_element.resize(boost::extents[se_size][se_size]);
-            struct_element[(int)se_size/2][(int)se_size/2] = 1;
+            compare();
         }
 
         void print_se() {
@@ -68,6 +68,22 @@ class Map {
             for(i=0; i<WIDTH; i++){
                 for(j=0; j<HEIGHT; j++){
                     std::cout << map_layout[i][j] << " ";
+                }
+                std::cout << std::endl;
+            }
+        }
+
+        void compare() {
+            typedef boost::multi_array_types::index_range range;
+            map_array::index_gen indices;
+
+            map_array::array_view<2>::type view = map_layout[indices[range(0,3)][range(0,3)]];
+            map_index i = 0;
+            map_index j = 0;
+
+            for(i=0; i<3; i++){
+                for(j=0; j<3; j++){
+                    std::cout << view[i][j] << " ";
                 }
                 std::cout << std::endl;
             }
