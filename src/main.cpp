@@ -130,6 +130,11 @@ class Map {
 
             map_index i = 0;
             map_index j = 0;
+            for(i=0; i<se_size; i++){
+                for(j=0; j<se_size; j++){
+                    struct_element[i][j] = 0;
+                }
+            }
 
             for(i=padding; i<width+padding; i++){
                 for(j=padding; j<height+padding; j++){
