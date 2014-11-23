@@ -124,9 +124,9 @@ class Map {
             }
         }
 
-        void erosion() {
-            map_array eroded;
-            eroded.resize(boost::extents[width_padding][height_padding]);
+        void dilation() {
+            map_array dilated;
+            dilated.resize(boost::extents[width_padding][height_padding]);
 
             map_index i = 0;
             map_index j = 0;
@@ -134,12 +134,12 @@ class Map {
             for(i=padding; i<width+padding; i++){
                 for(j=padding; j<height+padding; j++){
                     if(!compare(i,j)){
-                        eroded[i+1][j+1] = 1;
+                        dilated[i+1][j+1] = 1;
                     }
                 }
             }
 
-            map_layout = eroded;
+            map_layout = dilated;
         }
 };
 
@@ -151,7 +151,7 @@ int main(void) {
     std::cout << std::endl;
     map->print_se();
     std::cout << std::endl << std::endl;
-    map->erosion();
+    map->dilation();
     map->printview();
     return 0;
 }
