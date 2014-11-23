@@ -27,9 +27,19 @@ class Map {
         //size of the struct element
         int se_size;
 
+        //padding of struct element for map_layout
+        int padding;
+
+        //width and height with padding
+        int width_padding;
+        int height_padding;
+
         Map(int width, int height, int num_rooms, int se_size) : width(width), height(height), num_rooms(num_rooms), se_size(se_size) {
-            int padding = se_size / (int) 2;
-            map_layout.resize(boost::extents[width+padding][height+padding]);
+            padding = se_size / (int) 2;
+            width_padding = width + 2*padding;
+            height_padding = height + 2*padding;
+
+            map_layout.resize(boost::extents[width_padding][height_padding]);
             struct_element.resize(boost::extents[se_size][se_size]);
 
             int i;
@@ -63,12 +73,9 @@ class Map {
             map_index i = 0;
             map_index j = 0;
 
-            int padding = se_size / (int) 2;
-            map_array::array_view<2>::type map_view = map_layout[boost::indices[range(padding,width)][range(padding,height)]];
-
             for(i=x; i<room_size+x; i++){
                 for(j=y; j<room_size+y; j++){
-                    map_view[i][j] = 1;
+                    map_layout[i][j] = 1;
                 }
             }
         }
@@ -77,8 +84,8 @@ class Map {
             map_index i = 0;
             map_index j = 0;
 
-            for(i=0; i<width; i++){
-                for(j=0; j<height; j++){
+            for(i=0; i<width_padding; i++){
+                for(j=0; j<height_padding; j++){
                     std::cout << map_layout[i][j] << " ";
                 }
                 std::cout << std::endl;
@@ -86,15 +93,12 @@ class Map {
         }
 
         void printview() {
-            int padding = se_size / (int) 2;
-            map_array::array_view<2>::type map_view = map_layout[boost::indices[range(padding,width)][range(padding,height)]];
-
             map_index i = 0;
             map_index j = 0;
 
-            for(i=0; i<width-padding; i++){
-                for(j=0; j<height-padding; j++){
-                    std::cout << map_view[i][j] << " ";
+            for(i=padding; i<width+2; i++){
+                for(j=padding; j<height+2; j++){
+                    std::cout << map_layout[i][j] << " ";
                 }
                 std::cout << std::endl;
             }
