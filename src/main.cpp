@@ -174,17 +174,22 @@ class Map {
             dilation();
             erosion();
         }
+
+        void opening() {
+            erosion();
+            dilation();
+        }
 };
 
 int main(void) {
-    Map *map = new Map(WIDTH, HEIGHT, 45, 11);
+    Map *map = new Map(WIDTH, HEIGHT, 45, 5);
     map->print();
     std::cout << std::endl;
     map->printview();
     std::cout << std::endl;
     map->print_se();
     std::cout << std::endl << std::endl;
-    map->closing();
+    map->opening();
     map->printview();
     return 0;
 }
