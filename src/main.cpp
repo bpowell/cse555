@@ -146,17 +146,40 @@ class Map {
 
             map_layout = dilated;
         }
+
+        void erosion() {
+            map_array eroded;
+            eroded.resize(boost::extents[width_padding][height_padding]);
+
+            map_index i = 0;
+            map_index j = 0;
+            for(i=0; i<se_size; i++){
+                for(j=0; j<se_size; j++){
+                    struct_element[i][j] = 1;
+                }
+            }
+
+            for(i=padding; i<width+padding; i++){
+                for(j=padding; j<height+padding; j++){
+                    if(compare(i,j)){
+                        eroded[i+1][j+1] = 1;
+                    }
+                }
+            }
+
+            map_layout = eroded;
+        }
 };
 
 int main(void) {
-    Map *map = new Map(WIDTH, HEIGHT, 5, 5);
+    Map *map = new Map(WIDTH, HEIGHT, 5, 3);
     map->print();
     std::cout << std::endl;
     map->printview();
     std::cout << std::endl;
     map->print_se();
     std::cout << std::endl << std::endl;
-    map->dilation();
+    map->erosion();
     map->printview();
     return 0;
 }
