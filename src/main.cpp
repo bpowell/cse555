@@ -4,6 +4,7 @@
 
 typedef boost::multi_array<int, 2> map_array;
 typedef map_array::index map_index;
+typedef boost::multi_array_types::index_range range;
 
 #define WIDTH 50
 #define HEIGHT 50
@@ -11,22 +12,30 @@ typedef map_array::index map_index;
 
 class Map {
     public:
+        //map layout with extra padding for struct element
         map_array map_layout;
+        //the struct element used for morphological processing
         map_array struct_element;
+
+        //width and height of the map view
         int width;
         int height;
+
+        //number of rooms to be randomly created
         int num_rooms;
+
+        //size of the struct element
         int se_size;
 
         Map(int width, int height, int num_rooms, int se_size) : width(width), height(height), num_rooms(num_rooms), se_size(se_size) {
-            map_layout.resize(boost::extents[width][height]);
+            int padding = se_size / (int) 2;
+            map_layout.resize(boost::extents[width+padding][height+padding]);
+            struct_element.resize(boost::extents[se_size][se_size]);
+
             int i;
             for(i=0; i<num_rooms; i++){
                 random_room();
             }
-
-            struct_element.resize(boost::extents[se_size][se_size]);
-            compare();
         }
 
         void print_se() {
