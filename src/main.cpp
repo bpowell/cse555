@@ -169,17 +169,22 @@ class Map {
 
             map_layout = eroded;
         }
+
+        void closing() {
+            dilation();
+            erosion();
+        }
 };
 
 int main(void) {
-    Map *map = new Map(WIDTH, HEIGHT, 5, 3);
+    Map *map = new Map(WIDTH, HEIGHT, 45, 11);
     map->print();
     std::cout << std::endl;
     map->printview();
     std::cout << std::endl;
     map->print_se();
     std::cout << std::endl << std::endl;
-    map->erosion();
+    map->closing();
     map->printview();
     return 0;
 }
