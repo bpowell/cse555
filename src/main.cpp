@@ -95,23 +95,9 @@ class Map {
             }
         }
 
-        void compare(int x, int y) {
+        bool compare(int x, int y) {
             map_array::array_view<2>::type view = map_layout[boost::indices[range(x-padding,x+padding+1)][range(y-padding,y+padding+1)]];
-            unsigned int i = 0;
-            unsigned int j = 0;
-
-            for(; i<view.shape()[0]; i++){
-                for(j=0; j<view.shape()[1]; j++){
-                    std::cout << view[i][j] << " ";
-                }
-                std::cout << std::endl;
-            }
-
-            if(view==struct_element) {
-                std::cout << "equal" << std::endl;
-            }else{
-                std::cout << "not equal" << std::endl;
-            }
+            return (view==struct_element);
         }
 
         void print() {
@@ -137,6 +123,24 @@ class Map {
                 std::cout << std::endl;
             }
         }
+
+        void erosion() {
+            map_array eroded;
+            eroded.resize(boost::extents[width_padding][height_padding]);
+
+            map_index i = 0;
+            map_index j = 0;
+
+            for(i=padding; i<width+padding; i++){
+                for(j=padding; j<height+padding; j++){
+                    if(!compare(i,j)){
+                        eroded[i+1][j+1] = 1;
+                    }
+                }
+            }
+
+            map_layout = eroded;
+        }
 };
 
 int main(void) {
@@ -146,6 +150,8 @@ int main(void) {
     map->printview();
     std::cout << std::endl;
     map->print_se();
-    map->compare(5,5);
+    std::cout << std::endl << std::endl;
+    map->erosion();
+    map->printview();
     return 0;
 }
