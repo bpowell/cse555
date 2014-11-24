@@ -25,42 +25,16 @@ bool operator==(const map_array::array_view<2>::type &lhs, map_array &rhs) {
     return true;
 }
 
-class Map {
+class Morpological {
     public:
-        //map layout with extra padding for struct element
-        map_array map_layout;
         //the struct element used for morphological processing
         map_array struct_element;
-
-        //width and height of the map view
-        int width;
-        int height;
-
-        //number of rooms to be randomly created
-        int num_rooms;
 
         //size of the struct element
         int se_size;
 
-        //padding of struct element for map_layout
-        int padding;
-
-        //width and height with padding
-        int width_padding;
-        int height_padding;
-
-        Map(int width, int height, int num_rooms, int se_size) : width(width), height(height), num_rooms(num_rooms), se_size(se_size) {
-            padding = se_size / (int) 2;
-            width_padding = width + 2*padding;
-            height_padding = height + 2*padding;
-
-            map_layout.resize(boost::extents[width_padding][height_padding]);
+        Morpological(int se_size) : se_size(se_size) {
             struct_element.resize(boost::extents[se_size][se_size]);
-
-            int i;
-            for(i=0; i<num_rooms; i++){
-                random_room();
-            }
         }
 
         void print_se() {
@@ -72,6 +46,42 @@ class Map {
                     std::cout << struct_element[i][j] << " ";
                 }
                 std::cout << std::endl;
+            }
+        }
+};
+
+class Map {
+    public:
+        //map layout with extra padding for struct element
+        map_array map_layout;
+
+        //width and height of the map view
+        int width;
+        int height;
+
+        //number of rooms to be randomly created
+        int num_rooms;
+
+        //padding of struct element for map_layout
+        int padding;
+
+        //width and height with padding
+        int width_padding;
+        int height_padding;
+
+        //Morpological class
+        Morpological *morph;
+
+        Map(int width, int height, int num_rooms, Morpological *morph) : width(width), height(height), num_rooms(num_rooms), morph(morph) {
+            padding = morph->se_size / (int) 2;
+            width_padding = width + 2*padding;
+            height_padding = height + 2*padding;
+
+            map_layout.resize(boost::extents[width_padding][height_padding]);
+
+            int i;
+            for(i=0; i<num_rooms; i++){
+                random_room();
             }
         }
 
@@ -97,7 +107,7 @@ class Map {
 
         bool compare(int x, int y) {
             map_array::array_view<2>::type view = map_layout[boost::indices[range(x-padding,x+padding+1)][range(y-padding,y+padding+1)]];
-            return (view==struct_element);
+            return (view==morph->struct_element);
         }
 
         void print() {
@@ -130,9 +140,9 @@ class Map {
 
             map_index i = 0;
             map_index j = 0;
-            for(i=0; i<se_size; i++){
-                for(j=0; j<se_size; j++){
-                    struct_element[i][j] = 0;
+            for(i=0; i<morph->se_size; i++){
+                for(j=0; j<morph->se_size; j++){
+                    morph->struct_element[i][j] = 0;
                 }
             }
 
@@ -153,9 +163,9 @@ class Map {
 
             map_index i = 0;
             map_index j = 0;
-            for(i=0; i<se_size; i++){
-                for(j=0; j<se_size; j++){
-                    struct_element[i][j] = 1;
+            for(i=0; i<morph->se_size; i++){
+                for(j=0; j<morph->se_size; j++){
+                    morph->struct_element[i][j] = 1;
                 }
             }
 
@@ -182,12 +192,13 @@ class Map {
 };
 
 int main(void) {
-    Map *map = new Map(WIDTH, HEIGHT, 45, 5);
+    Morpological *morph = new Morpological(5);
+    Map *map = new Map(WIDTH, HEIGHT, 45, morph);
     map->print();
     std::cout << std::endl;
     map->printview();
     std::cout << std::endl;
-    map->print_se();
+    morph->print_se();
     std::cout << std::endl << std::endl;
     map->opening();
     map->printview();
