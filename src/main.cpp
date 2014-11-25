@@ -105,11 +105,6 @@ class Map {
             }
         }
 
-        bool compare(int x, int y) {
-            map_array::array_view<2>::type view = map_layout[boost::indices[range(x-padding,x+padding+1)][range(y-padding,y+padding+1)]];
-            return (view==structelement->struct_element);
-        }
-
         void print() {
             map_index i = 0;
             map_index j = 0;
@@ -133,16 +128,31 @@ class Map {
                 std::cout << std::endl;
             }
         }
+};
+
+class Morphological {
+    public:
+        Map *map;
+        StructElement *element;
+
+        Morphological(Map *map, StructElement *element) : map(map), element(element) {}
+        Morphological(Map *map) : map(map), element(map->structelement) {}
 
         void dilation() {
+            int padding = map->padding;
+            int width = map->width;
+            int height = map->height;
+            int width_padding = map->width_padding;
+            int height_padding = map->height_padding;
+
             map_array dilated;
             dilated.resize(boost::extents[width_padding][height_padding]);
 
             map_index i = 0;
             map_index j = 0;
-            for(i=0; i<structelement->se_size; i++){
-                for(j=0; j<structelement->se_size; j++){
-                    structelement->struct_element[i][j] = 0;
+            for(i=0; i<element->se_size; i++){
+                for(j=0; j<element->se_size; j++){
+                    element->struct_element[i][j] = 0;
                 }
             }
 
@@ -154,18 +164,24 @@ class Map {
                 }
             }
 
-            map_layout = dilated;
+            map->map_layout = dilated;
         }
 
         void erosion() {
+            int padding = map->padding;
+            int width = map->width;
+            int height = map->height;
+            int width_padding = map->width_padding;
+            int height_padding = map->height_padding;
+
             map_array eroded;
             eroded.resize(boost::extents[width_padding][height_padding]);
 
             map_index i = 0;
             map_index j = 0;
-            for(i=0; i<structelement->se_size; i++){
-                for(j=0; j<structelement->se_size; j++){
-                    structelement->struct_element[i][j] = 1;
+            for(i=0; i<element->se_size; i++){
+                for(j=0; j<element->se_size; j++){
+                    element->struct_element[i][j] = 1;
                 }
             }
 
@@ -177,7 +193,13 @@ class Map {
                 }
             }
 
-            map_layout = eroded;
+            map->map_layout = eroded;
+        }
+
+        bool compare(int x, int y) {
+            int padding = map->padding;
+            map_array::array_view<2>::type view = map->map_layout[boost::indices[range(x-padding,x+padding+1)][range(y-padding,y+padding+1)]];
+            return (view==element->struct_element);
         }
 
         void closing() {
@@ -194,13 +216,14 @@ class Map {
 int main(void) {
     StructElement *structelement = new StructElement(5);
     Map *map = new Map(WIDTH, HEIGHT, 45, structelement);
+    Morphological *morph = new Morphological(map);
     map->print();
     std::cout << std::endl;
     map->printview();
     std::cout << std::endl;
     structelement->print_se();
     std::cout << std::endl << std::endl;
-    map->opening();
+    morph->opening();
     map->printview();
     return 0;
 }
