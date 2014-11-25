@@ -25,15 +25,15 @@ bool operator==(const map_array::array_view<2>::type &lhs, map_array &rhs) {
     return true;
 }
 
-class Morpological {
+class StructElement {
     public:
-        //the struct element used for morphological processing
+        //the struct element used for processing
         map_array struct_element;
 
         //size of the struct element
         int se_size;
 
-        Morpological(int se_size) : se_size(se_size) {
+        StructElement(int se_size) : se_size(se_size) {
             struct_element.resize(boost::extents[se_size][se_size]);
         }
 
@@ -69,11 +69,11 @@ class Map {
         int width_padding;
         int height_padding;
 
-        //Morpological class
-        Morpological *morph;
+        //StructElement class
+        StructElement *structelement;
 
-        Map(int width, int height, int num_rooms, Morpological *morph) : width(width), height(height), num_rooms(num_rooms), morph(morph) {
-            padding = morph->se_size / (int) 2;
+        Map(int width, int height, int num_rooms, StructElement *structelement) : width(width), height(height), num_rooms(num_rooms), structelement(structelement) {
+            padding = structelement->se_size / (int) 2;
             width_padding = width + 2*padding;
             height_padding = height + 2*padding;
 
@@ -107,7 +107,7 @@ class Map {
 
         bool compare(int x, int y) {
             map_array::array_view<2>::type view = map_layout[boost::indices[range(x-padding,x+padding+1)][range(y-padding,y+padding+1)]];
-            return (view==morph->struct_element);
+            return (view==structelement->struct_element);
         }
 
         void print() {
@@ -140,9 +140,9 @@ class Map {
 
             map_index i = 0;
             map_index j = 0;
-            for(i=0; i<morph->se_size; i++){
-                for(j=0; j<morph->se_size; j++){
-                    morph->struct_element[i][j] = 0;
+            for(i=0; i<structelement->se_size; i++){
+                for(j=0; j<structelement->se_size; j++){
+                    structelement->struct_element[i][j] = 0;
                 }
             }
 
@@ -163,9 +163,9 @@ class Map {
 
             map_index i = 0;
             map_index j = 0;
-            for(i=0; i<morph->se_size; i++){
-                for(j=0; j<morph->se_size; j++){
-                    morph->struct_element[i][j] = 1;
+            for(i=0; i<structelement->se_size; i++){
+                for(j=0; j<structelement->se_size; j++){
+                    structelement->struct_element[i][j] = 1;
                 }
             }
 
@@ -192,13 +192,13 @@ class Map {
 };
 
 int main(void) {
-    Morpological *morph = new Morpological(5);
-    Map *map = new Map(WIDTH, HEIGHT, 45, morph);
+    StructElement *structelement = new StructElement(5);
+    Map *map = new Map(WIDTH, HEIGHT, 45, structelement);
     map->print();
     std::cout << std::endl;
     map->printview();
     std::cout << std::endl;
-    morph->print_se();
+    structelement->print_se();
     std::cout << std::endl << std::endl;
     map->opening();
     map->printview();
