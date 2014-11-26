@@ -13,4 +13,8 @@ typedef boost::multi_array<int, 2> map_array;
 typedef map_array::index map_index;
 typedef boost::multi_array_types::index_range range;
 
+#define WIDTH 50
+#define HEIGHT 50
+#define MAX_ROOM_SIZE 5
+
 #endif

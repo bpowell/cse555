@@ -1,13 +1,9 @@
 #include <iostream>
 #include <boost/multi_array.hpp>
-#include <random>
 
 #include "global.h"
 #include "StructElement.h"
-
-#define WIDTH 50
-#define HEIGHT 50
-#define MAX_ROOM_SIZE 5
+#include "Map.h"
 
 bool operator==(const map_array::array_view<2>::type &lhs, map_array &rhs) {
     unsigned int i = 0;
@@ -23,86 +19,6 @@ bool operator==(const map_array::array_view<2>::type &lhs, map_array &rhs) {
 
     return true;
 }
-
-class Map {
-    public:
-        //map layout with extra padding for struct element
-        map_array map_layout;
-
-        //width and height of the map view
-        int width;
-        int height;
-
-        //number of rooms to be randomly created
-        int num_rooms;
-
-        //padding of struct element for map_layout
-        int padding;
-
-        //width and height with padding
-        int width_padding;
-        int height_padding;
-
-        //StructElement class
-        StructElement *structelement;
-
-        Map(int width, int height, int num_rooms, StructElement *structelement) : width(width), height(height), num_rooms(num_rooms), structelement(structelement) {
-            padding = structelement->se_size / (int) 2;
-            width_padding = width + 2*padding;
-            height_padding = height + 2*padding;
-
-            map_layout.resize(boost::extents[width_padding][height_padding]);
-
-            int i;
-            for(i=0; i<num_rooms; i++){
-                random_room();
-            }
-        }
-
-        void random_room() {
-            std::random_device rd;
-            std::mt19937 gen(rd());
-            std::uniform_int_distribution<> dis1(0, width);
-            std::uniform_int_distribution<> dis2(1, MAX_ROOM_SIZE);
-
-            int x = dis1(gen);
-            int y = dis1(gen);
-
-            int room_size = dis2(gen);
-            map_index i = 0;
-            map_index j = 0;
-
-            for(i=x; i<room_size+x; i++){
-                for(j=y; j<room_size+y; j++){
-                    map_layout[i][j] = 1;
-                }
-            }
-        }
-
-        void print() {
-            map_index i = 0;
-            map_index j = 0;
-
-            for(i=0; i<width_padding; i++){
-                for(j=0; j<height_padding; j++){
-                    std::cout << map_layout[i][j] << " ";
-                }
-                std::cout << std::endl;
-            }
-        }
-
-        void printview() {
-            map_index i = 0;
-            map_index j = 0;
-
-            for(i=padding; i<width+2; i++){
-                for(j=padding; j<height+2; j++){
-                    std::cout << map_layout[i][j] << " ";
-                }
-                std::cout << std::endl;
-            }
-        }
-};
 
 class Morphological {
     public:
