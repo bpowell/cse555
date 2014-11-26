@@ -20,6 +20,13 @@ namespace dngine{
 		return window;
 	}
 
+	Screen_ptr Game::create_screen(std::string name){
+		SDL_Renderer_ptr r(SDL_CreateRenderer(window.get(), -1, SDL_RENDERER_ACCELERATED), SDL_DestroyRenderer);
+		Screen_ptr s(new Screen(r));
+
+		return s;
+	}
+
 	void Game::render(){
 	}
 }
