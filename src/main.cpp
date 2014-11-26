@@ -2,9 +2,8 @@
 #include <boost/multi_array.hpp>
 #include <random>
 
-typedef boost::multi_array<int, 2> map_array;
-typedef map_array::index map_index;
-typedef boost::multi_array_types::index_range range;
+#include "global.h"
+#include "StructElement.h"
 
 #define WIDTH 50
 #define HEIGHT 50
@@ -24,31 +23,6 @@ bool operator==(const map_array::array_view<2>::type &lhs, map_array &rhs) {
 
     return true;
 }
-
-class StructElement {
-    public:
-        //the struct element used for processing
-        map_array struct_element;
-
-        //size of the struct element
-        int se_size;
-
-        StructElement(int se_size) : se_size(se_size) {
-            struct_element.resize(boost::extents[se_size][se_size]);
-        }
-
-        void print_se() {
-            map_index i = 0;
-            map_index j = 0;
-
-            for(i=0; i<se_size; i++){
-                for(j=0; j<se_size; j++){
-                    std::cout << struct_element[i][j] << " ";
-                }
-                std::cout << std::endl;
-            }
-        }
-};
 
 class Map {
     public:
