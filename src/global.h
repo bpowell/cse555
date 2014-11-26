@@ -6,5 +6,6 @@
 #include <memory>
 
 typedef std::shared_ptr<SDL_Window> SDL_Window_ptr;
+typedef std::shared_ptr<SDL_Renderer> SDL_Renderer_ptr;
 
 #endif
