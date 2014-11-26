@@ -13,5 +13,5 @@ IF(APPLE)
         SET(EXTRA_LIBS ${SDL2_LIB})
 ENDIF (APPLE)
 
-add_executable(cse555 src/main.cpp src/Game.cpp)
+add_executable(cse555 src/main.cpp src/Game.cpp src/Screen.cpp)
 TARGET_LINK_LIBRARIES(cse555 boost_system ${EXTRA_LIBS})
