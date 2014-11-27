@@ -18,7 +18,7 @@ namespace dngine{
 			Game(std::string name, int width, int height);
 			~Game();
 			SDL_Window_ptr get_window();
-            Screen_ptr create_screen(std::string name);
+            Screen_ptr create_screen();
 			void render();
 	};
 }

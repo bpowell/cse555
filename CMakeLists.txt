@@ -1,9 +1,9 @@
 cmake_minimum_required (VERSION 2.6)
 set (CMAKE_CXX_COMPILER "clang++")
-set (CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -g3 -std=c++11")
 
 #Creates our project
 project (cse555)
+set (CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -g3 -std=c++11")
 
 IF(APPLE)
         #SET(GUI_TYPE MACOSX_BUNDLE)
@@ -12,6 +12,8 @@ IF(APPLE)
         FIND_LIBRARY(SDL2_IMG_LIB SDL2_image)
         MARK_AS_ADVANCED (SDL2_LIB SDL2_IMG_LIB)
         SET(EXTRA_LIBS ${SDL2_LIB} ${SDL2_IMG_LIB})
+    ELSE()
+        SET(EXTRA_LIBS SDL2 SDL2_image)
 ENDIF (APPLE)
 
 add_executable(cse555 src/main.cpp src/Game.cpp src/Screen.cpp src/StructElement.cpp src/Map.cpp src/Morphological.cpp src/Sprite.cpp src/SpriteSheet.cpp)
