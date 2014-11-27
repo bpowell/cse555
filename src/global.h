@@ -8,6 +8,7 @@
 
 typedef std::shared_ptr<SDL_Window> SDL_Window_ptr;
 typedef std::shared_ptr<SDL_Renderer> SDL_Renderer_ptr;
+typedef std::shared_ptr<SDL_Texture> SDL_Texture_ptr;
 
 typedef boost::multi_array<int, 2> map_array;
 typedef map_array::index map_index;
