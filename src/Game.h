@@ -19,8 +19,11 @@ namespace dngine{
 			~Game();
 			SDL_Window_ptr get_window();
             Screen_ptr create_screen();
+            void set_screen(Screen_ptr s);
 			void render();
 	};
+
+    typedef std::shared_ptr<Game> Game_ptr;
 }
 
 #endif

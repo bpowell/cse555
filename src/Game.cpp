@@ -5,6 +5,7 @@
 namespace dngine{
 	Game::Game(std::string name, int width, int height){
 		if(SDL_Init(SDL_INIT_VIDEO) < 0){
+            std::cout << SDL_GetError() << std::endl;
 			std::cout << "Cannot load SDL\n";
 			exit(-1);
 		}
@@ -26,6 +27,11 @@ namespace dngine{
 		return s;
 	}
 
+    void Game::set_screen(Screen_ptr s){
+        screen = s;
+    }
+
 	void Game::render(){
+		screen->render();
 	}
 }
