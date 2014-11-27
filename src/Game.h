@@ -10,18 +10,18 @@
 #include "Screen.h"
 
 namespace dngine{
-	class Game{
-		private:
-			SDL_Window_ptr window;
+    class Game{
+        private:
+            SDL_Window_ptr window;
             Screen_ptr screen;
-		public:
-			Game(std::string name, int width, int height);
-			~Game();
-			SDL_Window_ptr get_window();
+        public:
+            Game(std::string name, int width, int height);
+            ~Game();
+            SDL_Window_ptr get_window();
             Screen_ptr create_screen();
             void set_screen(Screen_ptr s);
-			void render();
-	};
+            void render();
+    };
 
     typedef std::shared_ptr<Game> Game_ptr;
 }

@@ -26,7 +26,7 @@ int main(void) {
     dngine::Screen_ptr screen = game.get()->create_screen();
     game.get()->set_screen(screen);
 
-	while (1) {
+    while (1) {
         SDL_Event e;
         if ( SDL_PollEvent(&e) ) {
             if (e.type == SDL_QUIT)
@@ -35,8 +35,8 @@ int main(void) {
                 break;
         }
 
-		game->render();
+        game->render();
 
-	}
+    }
     return 0;
 }
