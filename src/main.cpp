@@ -26,11 +26,9 @@ int main(void) {
     dngine::Screen_ptr screen = game.get()->create_screen();
     game.get()->set_screen(screen);
 	SDL_Rect size; size.x=size.y=0; size.w=size.h=40;
-	dngine::SpriteSheet_ptr sheet(new dngine::SpriteSheet(screen->get_renderer(), "toon.png", &size, 4, 0));
-	sheet.get()->set_clip(3,0);
-	screen.get()->add_sprite("two", sheet);
 	SDL_Rect loc; loc.x=loc.y=0; loc.h=loc.w=140;
-	sheet.get()->set_location(&loc);
+    dngine::Sprite_ptr sprite1(new dngine::Sprite(screen.get()->get_renderer(), "toon.png", &loc, &size, 1, 0));
+	screen.get()->add_sprite("two", sprite1);
 
     while (1) {
         SDL_Event e;

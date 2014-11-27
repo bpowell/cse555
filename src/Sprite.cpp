@@ -1,10 +1,17 @@
 #include "Sprite.h"
 
 namespace dngine{
-    Sprite::Sprite(SDL_Renderer_ptr r, std::string fname){
-        renderer = r;
-        filename = fname;
+    Sprite::Sprite(SDL_Renderer_ptr r, std::string fname, SDL_Rect *location) : renderer(r), filename(fname), location(location), size(NULL), clip(NULL){
         image = SDL_Texture_ptr(IMG_LoadTexture(renderer.get(), filename.c_str()), SDL_DestroyTexture);
+    }
+
+    Sprite::Sprite(SDL_Renderer_ptr r, std::string fname, SDL_Rect *location, SDL_Rect *size, int x, int y) : renderer(r), filename(fname), location(location), size(size), pos_x(x), pos_y(y) {
+        image = SDL_Texture_ptr(IMG_LoadTexture(renderer.get(), filename.c_str()), SDL_DestroyTexture);
+        clip = new SDL_Rect();
+        clip->x = pos_x * size->w;
+        clip->y = pos_y * size->h;
+        clip->w = size->w;
+        clip->h = size->h;
     }
 
     Sprite::~Sprite(){
@@ -30,6 +37,6 @@ namespace dngine{
     }
 
     void Sprite::render(){
-        SDL_RenderCopy(renderer.get(), image.get(), NULL, location);
+        SDL_RenderCopy(renderer.get(), image.get(), clip, location);
     }
 }

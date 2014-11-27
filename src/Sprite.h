@@ -19,31 +19,23 @@ namespace dngine{
             std::string filename;
             SDL_Texture_ptr image;
             SDL_Rect *location;
+            SDL_Rect *size;
+            SDL_Rect *clip;
+            int pos_x;
+            int pos_y;
         public:
-            Sprite(SDL_Renderer_ptr r, std::string fname);
+            Sprite(SDL_Renderer_ptr r, std::string fname, SDL_Rect *location);
+            Sprite(SDL_Renderer_ptr r, std::string fname, SDL_Rect *location, SDL_Rect *size, int x, int y);
             ~Sprite();
             SDL_Texture_ptr get_texture();
             void set_location(SDL_Rect *loc);
             void set_location(int x, int y, int h, int w);
             SDL_Rect *get_location() const;
-            virtual void render();
-    };
-
-    class SpriteSheet : public Sprite{
-        private:
-            SDL_Rect *clip_size;
-            int pos_x;
-            int max_x;
-            int pos_y;
-            int max_y;
-        public:
-            SpriteSheet(SDL_Renderer_ptr r, std::string fname, SDL_Rect *size, int x, int y);
+            void set_clip(SDL_Rect *c);
             void render();
-            void set_clip(int x, int y);
     };
 
     typedef std::shared_ptr<Sprite> Sprite_ptr;
-    typedef std::shared_ptr<SpriteSheet> SpriteSheet_ptr;
 }
 
 #endif
