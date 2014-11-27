@@ -9,8 +9,7 @@ namespace dngine{
 			exit(-1);
 		}
 
-		SDL_Window *w = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, 0);
-        window.reset(w, SDL_DestroyWindow);
+		window = SDL_Window_ptr(SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, 0), SDL_DestroyWindow);
 	}
 
 	Game::~Game(){
