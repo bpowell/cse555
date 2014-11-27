@@ -22,4 +22,6 @@ class Morphological {
 };
 
 bool operator==(const map_array::array_view<2>::type &lhs, map_array &rhs);
+typedef std::shared_ptr<Morphological> Morphological_ptr;
+
 #endif

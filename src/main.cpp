@@ -9,7 +9,7 @@
 int main(void) {
     StructElement_ptr structelement(new StructElement(11));
     Map_ptr map(new Map(WIDTH, HEIGHT, 45, structelement));
-    Morphological *morph = new Morphological(map);
+    Morphological_ptr morph(new Morphological(map));
     map->print();
     std::cout << std::endl;
     map->printview();
