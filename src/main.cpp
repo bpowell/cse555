@@ -7,7 +7,7 @@
 #include "Morphological.h"
 
 int main(void) {
-    StructElement *structelement = new StructElement(11);
+    StructElement_ptr structelement(new StructElement(11));
     Map *map = new Map(WIDTH, HEIGHT, 45, structelement);
     Morphological *morph = new Morphological(map);
     map->print();

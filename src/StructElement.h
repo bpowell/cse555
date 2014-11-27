@@ -18,4 +18,5 @@ class StructElement {
         void print_se();
 };
 
+typedef std::shared_ptr<StructElement> StructElement_ptr;
 #endif

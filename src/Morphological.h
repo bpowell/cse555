@@ -8,9 +8,9 @@
 class Morphological {
     public:
         Map *map;
-        StructElement *element;
+        StructElement_ptr element;
 
-        Morphological(Map *map, StructElement *element);
+        Morphological(Map *map, StructElement_ptr element);
         Morphological(Map *map);
 
         void dilation();

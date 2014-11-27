@@ -24,9 +24,9 @@ class Map {
         int height_padding;
 
         //StructElement class
-        StructElement *structelement;
+        StructElement_ptr structelement;
 
-        Map(int width, int height, int num_rooms, StructElement *structelement);
+        Map(int width, int height, int num_rooms, StructElement_ptr structelement);
         void random_room();
         void print();
         void printview();
