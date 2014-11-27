@@ -14,6 +14,13 @@ namespace dngine{
 
     void Screen::render(){
         SDL_RenderClear(renderer.get());
+		std::map<std::string, Sprite_ptr>::iterator it;
+
+		for(it=sprites.begin(); it!=sprites.end(); ++it){
+			Sprite_ptr sprite = it->second;
+			sprite.get()->render();
+		}
+
         SDL_RenderPresent(renderer.get());
     }
 
