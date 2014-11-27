@@ -32,4 +32,5 @@ class Map {
         void printview();
 };
 
+typedef std::shared_ptr<Map> Map_ptr;
 #endif

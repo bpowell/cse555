@@ -7,11 +7,11 @@
 
 class Morphological {
     public:
-        Map *map;
+        Map_ptr map;
         StructElement_ptr element;
 
-        Morphological(Map *map, StructElement_ptr element);
-        Morphological(Map *map);
+        Morphological(Map_ptr map, StructElement_ptr element);
+        Morphological(Map_ptr map);
 
         void dilation();
         void erosion();

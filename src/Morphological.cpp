@@ -3,15 +3,15 @@
 
 #include "Morphological.h"
 
-Morphological::Morphological(Map *map, StructElement_ptr element) : map(map), element(element) {}
-Morphological::Morphological(Map *map) : map(map), element(map->structelement) {}
+Morphological::Morphological(Map_ptr map, StructElement_ptr element) : map(map), element(element) {}
+Morphological::Morphological(Map_ptr map) : map(map), element(map.get()->structelement) {}
 
 void Morphological::dilation() {
-    int padding = map->padding;
-    int width = map->width;
-    int height = map->height;
-    int width_padding = map->width_padding;
-    int height_padding = map->height_padding;
+    int padding = map.get()->padding;
+    int width = map.get()->width;
+    int height = map.get()->height;
+    int width_padding = map.get()->width_padding;
+    int height_padding = map.get()->height_padding;
 
     map_array dilated;
     dilated.resize(boost::extents[width_padding][height_padding]);
@@ -32,15 +32,15 @@ void Morphological::dilation() {
         }
     }
 
-    map->map_layout = dilated;
+    map.get()->map_layout = dilated;
 }
 
 void Morphological::erosion() {
-    int padding = map->padding;
-    int width = map->width;
-    int height = map->height;
-    int width_padding = map->width_padding;
-    int height_padding = map->height_padding;
+    int padding = map.get()->padding;
+    int width = map.get()->width;
+    int height = map.get()->height;
+    int width_padding = map.get()->width_padding;
+    int height_padding = map.get()->height_padding;
 
     map_array eroded;
     eroded.resize(boost::extents[width_padding][height_padding]);
@@ -61,12 +61,12 @@ void Morphological::erosion() {
         }
     }
 
-    map->map_layout = eroded;
+    map.get()->map_layout = eroded;
 }
 
 bool Morphological::compare(int x, int y) {
-    int padding = map->padding;
-    map_array::array_view<2>::type view = map->map_layout[boost::indices[range(x-padding,x+padding+1)][range(y-padding,y+padding+1)]];
+    int padding = map.get()->padding;
+    map_array::array_view<2>::type view = map.get()->map_layout[boost::indices[range(x-padding,x+padding+1)][range(y-padding,y+padding+1)]];
     return (view==element.get()->struct_element);
 }
 
