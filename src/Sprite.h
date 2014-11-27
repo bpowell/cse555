@@ -41,6 +41,9 @@ namespace dngine{
             void render();
             void set_clip(int x, int y);
     };
+
+    typedef std::shared_ptr<Sprite> Sprite_ptr;
+    typedef std::shared_ptr<SpriteSheet> SpriteSheet_ptr;
 }
 
 #endif
