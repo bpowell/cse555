@@ -8,6 +8,7 @@
 
 #include "Game.h"
 #include "Screen.h"
+#include "Timer.h"
 
 int main(void) {
     StructElement_ptr structelement(new StructElement(11));
@@ -25,6 +26,7 @@ int main(void) {
     dngine::Game_ptr game(new dngine::Game("cse555", 800, 600));
     dngine::Screen_ptr screen = game.get()->create_screen();
     game.get()->set_screen(screen);
+    dngine::Timer timer;
 
     map_index i = 0;
     map_index j = 0;
@@ -39,6 +41,7 @@ int main(void) {
     }
 
     while (1) {
+        timer.start();
         SDL_Event e;
         if ( SDL_PollEvent(&e) ) {
             if (e.type == SDL_QUIT)
@@ -48,6 +51,8 @@ int main(void) {
         }
 
         game->render();
+        if(timer.get_ticks()<(1000/10))
+            SDL_Delay((1000/10)-timer.get_ticks());
 
     }
     return 0;
