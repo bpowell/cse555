@@ -14,17 +14,17 @@ namespace dngine{
 
     void Screen::render(){
         SDL_RenderClear(renderer.get());
-		std::map<std::string, Sprite_ptr>::iterator it;
+		std::list<Sprite_ptr>::iterator it;
 
 		for(it=sprites.begin(); it!=sprites.end(); ++it){
-			Sprite_ptr sprite = it->second;
+			Sprite_ptr sprite = *it;
 			sprite.get()->render();
 		}
 
         SDL_RenderPresent(renderer.get());
     }
 
-    void Screen::add_sprite(std::string name, Sprite_ptr sprite) {
-        sprites.insert(std::pair<std::string,Sprite_ptr>(name,sprite));
+    void Screen::add_sprite(Sprite_ptr sprite) {
+        sprites.push_back(sprite);
     }
 }
