@@ -25,10 +25,22 @@ int main(void) {
     dngine::Game_ptr game(new dngine::Game("cse555", 800, 600));
     dngine::Screen_ptr screen = game.get()->create_screen();
     game.get()->set_screen(screen);
-	SDL_Rect size; size.x=size.y=0; size.w=size.h=40;
-	SDL_Rect loc; loc.x=loc.y=0; loc.h=loc.w=140;
-    dngine::Sprite_ptr sprite1(new dngine::Sprite(screen.get()->get_renderer(), "toon.png", &loc, &size, 1, 0));
-	screen.get()->add_sprite("two", sprite1);
+
+    map_index i = 0;
+    map_index j = 0;
+    char c = 65;
+    for(i=0; i<1; i++){
+        for(j=0; j<2; j++){
+            std::string name = "tile";
+            name.append(1,c);
+            c++;
+            SDL_Rect loc; loc.x=loc.y=20*i; loc.h=loc.w=20+(j*20);
+            SDL_Rect size; size.x=size.y=0; size.w=size.h=40;
+            //std::cout << loc.x << " " << loc.y << " " << loc.w << " " << loc.h << std::endl;
+            //std::cout << size.x << " " << size.y << " " << size.w << " " << size.h << std::endl;
+            screen.get()->add_sprite(name, dngine::Sprite_ptr(new dngine::Sprite(screen.get()->get_renderer(), "toon.png", &loc, &size, 1, 0)));
+        }
+    }
 
     while (1) {
         SDL_Event e;
