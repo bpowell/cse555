@@ -51,8 +51,8 @@ int main(void) {
         }
 
         game->render();
-        if(timer.get_ticks()<(1000/10))
-            SDL_Delay((1000/10)-timer.get_ticks());
+        if(timer.get_ticks()<(1000/30))
+            SDL_Delay((1000/30)-timer.get_ticks());
 
     }
     return 0;
