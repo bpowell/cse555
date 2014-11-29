@@ -26,12 +26,13 @@ void Map::random_room() {
     int x = dis1(gen);
     int y = dis1(gen);
 
-    int room_size = dis2(gen);
+    int room_size_x = dis2(gen);
+    int room_size_y = dis2(gen);
     map_index i = 0;
     map_index j = 0;
 
-    for(i=x; i<room_size+x; i++){
-        for(j=y; j<room_size+y; j++){
+    for(i=x; i<room_size_x+x; i++){
+        for(j=y; j<room_size_y+y; j++){
             map_layout[i][j] = 1;
         }
     }
