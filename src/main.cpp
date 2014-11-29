@@ -6,8 +6,7 @@
 #include "Map.h"
 #include "Morphological.h"
 
-#include "Game.h"
-#include "Screen.h"
+#include "Display.h"
 #include "Timer.h"
 
 int main(void) {
@@ -23,22 +22,8 @@ int main(void) {
     morph->closing();
     map->printview();
 
-    dngine::Game_ptr game(new dngine::Game("cse555", 800, 600));
-    dngine::Screen_ptr screen = game.get()->create_screen();
-    game.get()->set_screen(screen);
     dngine::Timer timer;
-
-    map_index i = 0;
-    map_index j = 0;
-    std::cout << std::endl;
-    int add = structelement->se_size / 2;
-    for(i=add; i<50+add; i++){
-        for(j=add; j<50+add; j++){
-            SDL_Rect *loc = new SDL_Rect(); loc->x=j*10; loc->y=i*10; loc->w=loc->h=10;
-            SDL_Rect *size = new SDL_Rect(); size->x=size->y=0; size->w=size->h=80;
-            screen.get()->add_sprite(dngine::Sprite_ptr(new dngine::Sprite(screen.get()->get_renderer(), "tileset.png", loc, size, map->map_layout[i][j], 0)));
-        }
-    }
+    Display *display1 = new Display("cse555", map->map_layout, 610, 640);
 
     while (1) {
         timer.start();
@@ -50,7 +35,7 @@ int main(void) {
                 break;
         }
 
-        game->render();
+        display1->render();
         if(timer.get_ticks()<(1000/30))
             SDL_Delay((1000/30)-timer.get_ticks());
 
