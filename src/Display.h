@@ -19,4 +19,6 @@ class Display {
         void render();
 };
 
+typedef std::shared_ptr<Display> Display_ptr;
+
 #endif

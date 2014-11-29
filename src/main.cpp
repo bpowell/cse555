@@ -1,5 +1,5 @@
 #include <iostream>
-#include <boost/multi_array.hpp>
+#include <list>
 
 #include "global.h"
 #include "StructElement.h"
@@ -23,7 +23,8 @@ int main(void) {
     map->printview();
 
     dngine::Timer timer;
-    Display *display1 = new Display("cse555", map->map_layout, 610, 640);
+    std::list<Display_ptr> displays;
+    displays.push_back(Display_ptr(new Display("cse555", map->map_layout, 610, 640)));
 
     while (1) {
         timer.start();
@@ -35,7 +36,11 @@ int main(void) {
                 break;
         }
 
-        display1->render();
+		std::list<Display_ptr>::iterator it;
+		for(it=displays.begin(); it!=displays.end(); ++it){
+			(*it)->render();
+		}
+
         if(timer.get_ticks()<(1000/30))
             SDL_Delay((1000/30)-timer.get_ticks());
 
