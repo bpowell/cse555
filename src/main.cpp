@@ -10,21 +10,17 @@
 #include "Timer.h"
 
 int main(void) {
+    std::list<Display_ptr> displays;
+
     StructElement_ptr structelement(new StructElement(11));
     Map_ptr map(new Map(WIDTH, HEIGHT, 45, structelement));
     Morphological_ptr morph(new Morphological(map));
-    map->print();
-    std::cout << std::endl;
-    map->printview();
-    std::cout << std::endl;
-    structelement->print_se();
-    std::cout << std::endl << std::endl;
+    displays.push_back(Display_ptr(new Display("Map with random rooms", map->map_layout, 610, 640)));
+    displays.push_back(Display_ptr(new Display("Map with random rooms after dilation", morph->dilation(), 610, 640)));
     morph->closing();
-    map->printview();
+    displays.push_back(Display_ptr(new Display("Map after closing", map->map_layout, 610, 640)));
 
     dngine::Timer timer;
-    std::list<Display_ptr> displays;
-    displays.push_back(Display_ptr(new Display("cse555", map->map_layout, 610, 640)));
 
     while (1) {
         timer.start();

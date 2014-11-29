@@ -21,7 +21,7 @@ namespace dngine{
     }
 
     Screen_ptr Game::create_screen(){
-        SDL_Renderer_ptr r(SDL_CreateRenderer(window.get(), -1, SDL_RENDERER_ACCELERATED), SDL_DestroyRenderer);
+        SDL_Renderer_ptr r(SDL_CreateRenderer(window.get(), -1, SDL_RENDERER_ACCELERATED|SDL_RENDERER_TARGETTEXTURE), SDL_DestroyRenderer);
         Screen_ptr s(new Screen(r));
 
         return s;
