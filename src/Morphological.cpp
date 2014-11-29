@@ -6,7 +6,7 @@
 Morphological::Morphological(Map_ptr map, StructElement_ptr element) : map(map), element(element) {}
 Morphological::Morphological(Map_ptr map) : map(map), element(map.get()->structelement) {}
 
-void Morphological::dilation() {
+map_array Morphological::dilation() {
     int padding = map.get()->padding;
     int width = map.get()->width;
     int height = map.get()->height;
@@ -32,10 +32,10 @@ void Morphological::dilation() {
         }
     }
 
-    map.get()->map_layout = dilated;
+    return dilated;
 }
 
-void Morphological::erosion() {
+map_array Morphological::erosion() {
     int padding = map.get()->padding;
     int width = map.get()->width;
     int height = map.get()->height;
@@ -61,7 +61,7 @@ void Morphological::erosion() {
         }
     }
 
-    map.get()->map_layout = eroded;
+    return eroded;
 }
 
 bool Morphological::compare(int x, int y) {
@@ -71,13 +71,13 @@ bool Morphological::compare(int x, int y) {
 }
 
 void Morphological::closing() {
-    dilation();
-    erosion();
+    map->map_layout = dilation();
+    map->map_layout = erosion();
 }
 
 void Morphological::opening() {
-    erosion();
-    dilation();
+    map->map_layout = erosion();
+    map->map_layout = dilation();
 }
 
 bool operator==(const map_array::array_view<2>::type &lhs, map_array &rhs) {

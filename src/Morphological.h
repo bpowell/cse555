@@ -13,8 +13,8 @@ class Morphological {
         Morphological(Map_ptr map, StructElement_ptr element);
         Morphological(Map_ptr map);
 
-        void dilation();
-        void erosion();
+        map_array dilation();
+        map_array erosion();
         bool compare(int x, int y);
         void closing();
         void opening();
