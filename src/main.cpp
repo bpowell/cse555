@@ -30,9 +30,17 @@ void render(std::list<Display_ptr> displays) {
 }
 
 int main(void) {
+    int se_size;
+    int number_rooms;
+
+    std::cout << "Structing element size(odd number please): ";
+    std::cin >> se_size;
+    std::cout << "Number of random rooms to create: ";
+    std::cin >> number_rooms;
+
     std::list<Display_ptr> displays;
-    StructElement_ptr structelement(new StructElement(11));
-    Map_ptr map(new Map(WIDTH, HEIGHT, 45, structelement));
+    StructElement_ptr structelement(new StructElement(se_size));
+    Map_ptr map(new Map(WIDTH, HEIGHT, number_rooms, structelement));
     Morphological_ptr morph(new Morphological(map));
     displays.push_back(Display_ptr(new Display("Map with random rooms", map->map_layout, 610, 640)));
     displays.push_back(Display_ptr(new Display("Map with random rooms after dilation", morph->dilation(), 610, 640)));
