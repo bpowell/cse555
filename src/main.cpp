@@ -17,10 +17,10 @@ void render(std::list<Display_ptr> displays) {
     while(running) {
         timer.start();
 
-		std::list<Display_ptr>::iterator it;
-		for(it=displays.begin(); it!=displays.end(); ++it){
-			(*it)->render();
-		}
+        std::list<Display_ptr>::iterator it;
+        for(it=displays.begin(); it!=displays.end(); ++it){
+            (*it)->render();
+        }
 
         if(timer.get_ticks()<(1000/30))
             SDL_Delay((1000/30)-timer.get_ticks());
@@ -42,10 +42,13 @@ int main(void) {
     StructElement_ptr structelement(new StructElement(se_size));
     Map_ptr map(new Map(WIDTH, HEIGHT, number_rooms, structelement));
     Morphological_ptr morph(new Morphological(map));
-    displays.push_back(Display_ptr(new Display("Map with random rooms", map->map_layout, 610, 640)));
-    displays.push_back(Display_ptr(new Display("Map with random rooms after dilation", morph->dilation(), 610, 640)));
+    displays.push_back(Display_ptr(new Display
+                ("Map with random rooms", map->map_layout, 610, 640)));
+    displays.push_back(Display_ptr(new Display
+                ("Map with random rooms after dilation", morph->dilation(), 610, 640)));
     morph->closing();
-    displays.push_back(Display_ptr(new Display("Map after closing", map->map_layout, 610, 640)));
+    displays.push_back(Display_ptr(new Display
+                ("Map after closing", map->map_layout, 610, 640)));
 
     running = true;
     std::thread thread_render(render, displays);

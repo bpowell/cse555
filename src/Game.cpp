@@ -10,7 +10,11 @@ namespace dngine{
             exit(-1);
         }
 
-        window = SDL_Window_ptr(SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, 0), SDL_DestroyWindow);
+        window = SDL_Window_ptr(SDL_CreateWindow(
+                    name.c_str(),
+                    SDL_WINDOWPOS_UNDEFINED,
+                    SDL_WINDOWPOS_UNDEFINED,
+                    width, height, 0), SDL_DestroyWindow);
     }
 
     Game::~Game(){
@@ -21,7 +25,10 @@ namespace dngine{
     }
 
     Screen_ptr Game::create_screen(){
-        SDL_Renderer_ptr r(SDL_CreateRenderer(window.get(), -1, SDL_RENDERER_ACCELERATED|SDL_RENDERER_TARGETTEXTURE), SDL_DestroyRenderer);
+        SDL_Renderer_ptr r(SDL_CreateRenderer(
+                    window.get(), -1,
+                    SDL_RENDERER_ACCELERATED|SDL_RENDERER_TARGETTEXTURE)
+                , SDL_DestroyRenderer);
         Screen_ptr s(new Screen(r));
 
         return s;

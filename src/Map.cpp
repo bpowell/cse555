@@ -4,7 +4,9 @@
 
 #include "Map.h"
 
-Map::Map(int width, int height, int num_rooms, StructElement_ptr structelement) : width(width), height(height), num_rooms(num_rooms), structelement(structelement) {
+Map::Map(int width, int height, int num_rooms, StructElement_ptr structelement)
+    : width(width), height(height),
+    num_rooms(num_rooms), structelement(structelement) {
     padding = structelement.get()->se_size / (int) 2;
     width_padding = width + 2*padding;
     height_padding = height + 2*padding;

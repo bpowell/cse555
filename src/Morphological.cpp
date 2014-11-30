@@ -3,8 +3,10 @@
 
 #include "Morphological.h"
 
-Morphological::Morphological(Map_ptr map, StructElement_ptr element) : map(map), element(element) {}
-Morphological::Morphological(Map_ptr map) : map(map), element(map.get()->structelement) {}
+Morphological::Morphological(Map_ptr map, StructElement_ptr element) :
+    map(map), element(element) {}
+Morphological::Morphological(Map_ptr map) :
+    map(map), element(map.get()->structelement) {}
 
 map_array Morphological::dilation() {
     int padding = map.get()->padding;
@@ -66,7 +68,9 @@ map_array Morphological::erosion() {
 
 bool Morphological::compare(int x, int y) {
     int padding = map.get()->padding;
-    map_array::array_view<2>::type view = map.get()->map_layout[boost::indices[range(x-padding,x+padding+1)][range(y-padding,y+padding+1)]];
+    map_array::array_view<2>::type view =
+        map.get()->map_layout
+        [boost::indices[range(x-padding,x+padding+1)][range(y-padding,y+padding+1)]];
     return (view==element.get()->struct_element);
 }
 
