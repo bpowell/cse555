@@ -18,7 +18,7 @@ namespace dngine{
 
 		for(it=sprites.begin(); it!=sprites.end(); ++it){
 			Sprite_ptr sprite = *it;
-			sprite.get()->render();
+			sprite->render();
 		}
 
         SDL_RenderPresent(renderer.get());

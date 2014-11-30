@@ -6,23 +6,23 @@
 Morphological::Morphological(Map_ptr map, StructElement_ptr element) :
     map(map), element(element) {}
 Morphological::Morphological(Map_ptr map) :
-    map(map), element(map.get()->structelement) {}
+    map(map), element(map->structelement) {}
 
 map_array Morphological::dilation() {
-    int padding = map.get()->padding;
-    int width = map.get()->width;
-    int height = map.get()->height;
-    int width_padding = map.get()->width_padding;
-    int height_padding = map.get()->height_padding;
+    int padding = map->padding;
+    int width = map->width;
+    int height = map->height;
+    int width_padding = map->width_padding;
+    int height_padding = map->height_padding;
 
     map_array dilated;
     dilated.resize(boost::extents[width_padding][height_padding]);
 
     map_index i = 0;
     map_index j = 0;
-    for(i=0; i<element.get()->se_size; i++){
-        for(j=0; j<element.get()->se_size; j++){
-            element.get()->struct_element[i][j] = 0;
+    for(i=0; i<element->se_size; i++){
+        for(j=0; j<element->se_size; j++){
+            element->struct_element[i][j] = 0;
         }
     }
 
@@ -38,20 +38,20 @@ map_array Morphological::dilation() {
 }
 
 map_array Morphological::erosion() {
-    int padding = map.get()->padding;
-    int width = map.get()->width;
-    int height = map.get()->height;
-    int width_padding = map.get()->width_padding;
-    int height_padding = map.get()->height_padding;
+    int padding = map->padding;
+    int width = map->width;
+    int height = map->height;
+    int width_padding = map->width_padding;
+    int height_padding = map->height_padding;
 
     map_array eroded;
     eroded.resize(boost::extents[width_padding][height_padding]);
 
     map_index i = 0;
     map_index j = 0;
-    for(i=0; i<element.get()->se_size; i++){
-        for(j=0; j<element.get()->se_size; j++){
-            element.get()->struct_element[i][j] = 1;
+    for(i=0; i<element->se_size; i++){
+        for(j=0; j<element->se_size; j++){
+            element->struct_element[i][j] = 1;
         }
     }
 
@@ -67,11 +67,11 @@ map_array Morphological::erosion() {
 }
 
 bool Morphological::compare(int x, int y) {
-    int padding = map.get()->padding;
+    int padding = map->padding;
     map_array::array_view<2>::type view =
-        map.get()->map_layout
+        map->map_layout
         [boost::indices[range(x-padding,x+padding+1)][range(y-padding,y+padding+1)]];
-    return (view==element.get()->struct_element);
+    return (view==element->struct_element);
 }
 
 void Morphological::closing() {
