@@ -30,6 +30,9 @@ class Map {
         void random_room();
         void print();
         void printview();
+
+        void border();
+        void unborder();
 };
 
 typedef std::shared_ptr<Map> Map_ptr;

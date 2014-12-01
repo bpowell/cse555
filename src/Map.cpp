@@ -63,3 +63,36 @@ void Map::printview() {
         std::cout << std::endl;
     }
 }
+
+void Map::border() {
+    map_index i = 0;
+    map_index j = 0;
+
+    for(i=padding, j=padding; j<height+padding; j++) {
+        map_layout[i][j] = 2;
+    }
+
+    for(i=padding, j=padding; i<width+padding; i++) {
+        map_layout[i][j] = 2;
+    }
+
+    for(i=width+padding, j=padding; j<height+padding; j++) {
+        map_layout[i][j] = 2;
+    }
+
+    for(i=padding, j=height+padding; i<width+padding; i++) {
+        map_layout[i][j] = 2;
+    }
+}
+
+void Map::unborder() {
+    map_index i = 0;
+    map_index j = 0;
+
+    for(i=0; i<width_padding; i++){
+        for(j=0; j<height_padding; j++){
+            if(map_layout[i][j]==2)
+                map_layout[i][j] = 0;
+        }
+    }
+}
