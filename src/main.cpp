@@ -42,11 +42,17 @@ int main(void) {
     StructElement_ptr structelement(new StructElement(se_size));
     Map_ptr map(new Map(WIDTH, HEIGHT, number_rooms, structelement));
     Morphological_ptr morph(new Morphological(map));
+    map->border();
     displays.push_back(Display_ptr(new Display
                 ("Map with random rooms", map->map_layout, 610, 640)));
+    map->unborder();
+    Map_ptr map2(new Map(WIDTH, HEIGHT, number_rooms, structelement));
+    map2->map_layout = morph->dilation();
+    map2->border();
     displays.push_back(Display_ptr(new Display
-                ("Map with random rooms after dilation", morph->dilation(), 610, 640)));
+                ("Map with random rooms after dilation", map2->map_layout, 610, 640)));
     morph->closing();
+    map->border();
     displays.push_back(Display_ptr(new Display
                 ("Map after closing", map->map_layout, 610, 640)));
 
